@@ -46,7 +46,7 @@ public class ExceptionHandlerAdvice {
         return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler({UsernameNotFoundException.class, BadCredentialsException.class})
+    @ExceptionHandler({ UsernameNotFoundException.class, BadCredentialsException.class })
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     ResponseEntity<String> handleAuthenticationException(Exception ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.UNAUTHORIZED);
@@ -70,9 +70,9 @@ public class ExceptionHandlerAdvice {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
     }
 
-    // I have no validation in the project right now  (keep aware of)
+    // I have no validation in the project right now (keep aware of)
 
-    // If no credentials are provided -> 500 error code 
+    // If no credentials are provided -> 500 error code
     // message - Full authentication is required to access this resource
 
     // should have a BAD_REQUEST error from a MethodArgumentNotValidException ?

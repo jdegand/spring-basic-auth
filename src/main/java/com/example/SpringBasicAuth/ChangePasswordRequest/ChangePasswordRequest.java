@@ -1,9 +1,9 @@
 package com.example.SpringBasicAuth.ChangePasswordRequest;
 
 public class ChangePasswordRequest {
-    
+
     // need something that is unique (email, username)
-    // need to add validation to ensure it is unique 
+    // need to add validation to ensure it is unique
     private String username;
 
     private String oldPassword;

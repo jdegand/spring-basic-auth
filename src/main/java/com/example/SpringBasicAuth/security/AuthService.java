@@ -25,13 +25,11 @@ public class AuthService {
 
     public Map<String, Object> createLoginInfo(Authentication authentication) {
         // Create user info.
-        UserPrincipal principal = (UserPrincipal)authentication.getPrincipal();
+        UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
         User user = principal.getUser();
         UserDto userDto = this.userToUserDtoConverter.convert(user);
         // Create a JWT.
         String token = this.jwtProvider.createToken(authentication);
-
-        //String token = "";
 
         Map<String, Object> loginResultMap = new HashMap<>();
 

@@ -88,7 +88,8 @@ public class UserController {
             return new ResponseEntity<String>("Incorrect old Password", HttpStatus.BAD_REQUEST);
         }
 
-        // could save into a variable (User userInfo =) or convert to a UserDTO to send back to client 
+        // could save into a variable (User userInfo =) or convert to a UserDTO to send
+        // back to client
         this.userService.updatePassword(user, changePasswordRequest.getNewPassword());
 
         return new ResponseEntity<String>("Password changed successfully", HttpStatus.OK);

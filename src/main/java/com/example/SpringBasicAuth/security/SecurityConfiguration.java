@@ -72,7 +72,7 @@ public class SecurityConfiguration {
                     auth.requestMatchers(HttpMethod.POST, this.baseUrl + "/users").hasAuthority("ROLE_admin");
                     auth.requestMatchers(HttpMethod.POST, this.baseUrl + "/users/reset").hasAuthority("ROLE_user");
                     auth.requestMatchers(HttpMethod.PUT, this.baseUrl + "/users/**").hasAuthority("ROLE_admin");
-                    auth.requestMatchers(HttpMethod.DELETE, this.baseUrl + "/users/**").hasAuthority("ROLE_admin"); 
+                    auth.requestMatchers(HttpMethod.DELETE, this.baseUrl + "/users/**").hasAuthority("ROLE_admin");
                     auth.anyRequest().authenticated();
                 })
                 .headers(headers -> headers

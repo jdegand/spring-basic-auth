@@ -11,7 +11,6 @@ public class DBDataInitializer implements CommandLineRunner {
 
     private final UserService userService;
 
-
     public DBDataInitializer(UserService userService) {
         this.userService = userService;
     }

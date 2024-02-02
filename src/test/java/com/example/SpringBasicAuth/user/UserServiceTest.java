@@ -20,9 +20,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.SpringBasicAuth.system.exception.ObjectNotFoundException;
-//import com.example.SpringBasicAuth.user.User;
-//import com.example.SpringBasicAuth.user.UserRepository;
-//import com.example.SpringBasicAuth.user.UserService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -125,7 +122,8 @@ class UserServiceTest {
 
         // When
         Throwable thrown = catchThrowable(() -> {
-            //User returnedUser = this.userService.findById(1); don't need to save in a variable
+            // User returnedUser = this.userService.findById(1); don't need to save in a
+            // variable
             this.userService.findById(1);
         });
 

@@ -41,7 +41,7 @@ public class UserService implements UserDetailsService {
 
     /**
      * We are not using this update to change user password.
-    */
+     */
     public User update(Integer id, User update) {
         User oldUser = this.userRepository.findById(id)
                 .orElseThrow(() -> new ObjectNotFoundException("user", id));
@@ -53,7 +53,8 @@ public class UserService implements UserDetailsService {
 
     public User updatePassword(UserPrincipal user, String newPassword) {
         User userInfo = user.getUser();
-        User oldUser = this.userRepository.findById(userInfo.getId()).orElseThrow(() -> new ObjectNotFoundException("user", userInfo.getId()));
+        User oldUser = this.userRepository.findById(userInfo.getId())
+                .orElseThrow(() -> new ObjectNotFoundException("user", userInfo.getId()));
         oldUser.setPassword(this.passwordEncoder.encode(newPassword));
         return this.userRepository.save(oldUser);
     }
@@ -70,8 +71,8 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return this.userRepository.findByUsername(username) 
-                .map(user -> new UserPrincipal(user)) 
+        return this.userRepository.findByUsername(username)
+                .map(user -> new UserPrincipal(user))
                 .orElseThrow(() -> new UsernameNotFoundException("username " + username + " is not found."));
     }
 

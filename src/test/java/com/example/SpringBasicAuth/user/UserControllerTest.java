@@ -17,9 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.SpringBasicAuth.ChangePasswordRequest.ChangePasswordRequest;
 import com.example.SpringBasicAuth.system.exception.ObjectNotFoundException;
-//import com.example.SpringBasicAuth.user.User;
-//import com.example.SpringBasicAuth.user.UserPrincipal;
-//import com.example.SpringBasicAuth.user.UserService;
 import com.example.SpringBasicAuth.user.dto.UserDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -118,7 +115,9 @@ class UserControllerTest {
 
         given(this.userService.update(eq(3), Mockito.any(User.class))).willReturn(updatedUser);
 
-        this.mockMvc.perform(put(this.baseUrl + "/users/3").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
+        this.mockMvc
+                .perform(put(this.baseUrl + "/users/3").contentType(MediaType.APPLICATION_JSON).content(json)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(3))
                 .andExpect(jsonPath("$.username").value("jeff"))
                 .andExpect(jsonPath("$.enabled").value(false))
@@ -127,13 +126,16 @@ class UserControllerTest {
 
     @Test
     void testUpdateUserErrorWithNonExistentId() throws Exception {
-        given(this.userService.update(eq(5), Mockito.any(User.class))).willThrow(new ObjectNotFoundException("user", 5));
+        given(this.userService.update(eq(5), Mockito.any(User.class)))
+                .willThrow(new ObjectNotFoundException("user", 5));
 
         UserDto userDto = new UserDto(5, "tom123", "user", false);
 
         String json = this.objectMapper.writeValueAsString(userDto);
 
-        this.mockMvc.perform(put(this.baseUrl + "/users/5").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
+        this.mockMvc
+                .perform(put(this.baseUrl + "/users/5").contentType(MediaType.APPLICATION_JSON).content(json)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").value("Could not find user with Id 5"));
     }
 
@@ -163,11 +165,15 @@ class UserControllerTest {
 
         given(this.userService.loadUserByUsername(changePasswordRequest.getUsername())).willReturn(userPrincipal);
 
-        given(this.userService.oldPasswordIsValid(userPrincipal, changePasswordRequest.getOldPassword())).willReturn(true);
+        given(this.userService.oldPasswordIsValid(userPrincipal, changePasswordRequest.getOldPassword()))
+                .willReturn(true);
 
-        given(this.userService.updatePassword(userPrincipal, changePasswordRequest.getNewPassword())).willReturn(updatedUser);
+        given(this.userService.updatePassword(userPrincipal, changePasswordRequest.getNewPassword()))
+                .willReturn(updatedUser);
 
-        this.mockMvc.perform(post(this.baseUrl + "/users/reset").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
+        this.mockMvc
+                .perform(post(this.baseUrl + "/users/reset").contentType(MediaType.APPLICATION_JSON).content(json)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").value("Password changed successfully"));
     }
@@ -190,11 +196,15 @@ class UserControllerTest {
 
         given(this.userService.loadUserByUsername(changePasswordRequest.getUsername())).willReturn(userPrincipal);
 
-        //given(this.userService.oldPasswordIsValid(userPrincipal, changePasswordRequest.getOldPassword())).willReturn(true);
+        // given(this.userService.oldPasswordIsValid(userPrincipal,
+        // changePasswordRequest.getOldPassword())).willReturn(true);
 
-        given(this.userService.updatePassword(userPrincipal, changePasswordRequest.getNewPassword())).willReturn(updatedUser);
+        given(this.userService.updatePassword(userPrincipal, changePasswordRequest.getNewPassword()))
+                .willReturn(updatedUser);
 
-        this.mockMvc.perform(post(this.baseUrl + "/users/reset").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
+        this.mockMvc
+                .perform(post(this.baseUrl + "/users/reset").contentType(MediaType.APPLICATION_JSON).content(json)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$").value("Incorrect old Password"));
     }
@@ -218,12 +228,16 @@ class UserControllerTest {
         updatedUser.setEnabled(true);
         updatedUser.setRoles("user");
 
-        // need to mock other checks inside updatePassword  - otherwise test will return 400 as the passwords are encoded and will not match
+        // need to mock other checks inside updatePassword - otherwise test will return
+        // 400 as the passwords are encoded and will not match
         // I commented out the check - andExpect(status().isOk()) - would pass
 
-        given(this.userService.updatePassword(userPrincipal, changePasswordRequest.getNewPassword())).willReturn(updatedUser);
+        given(this.userService.updatePassword(userPrincipal, changePasswordRequest.getNewPassword()))
+                .willReturn(updatedUser);
 
-        this.mockMvc.perform(post(this.baseUrl + "/users/reset").contentType(MediaType.APPLICATION_JSON).content(json).accept(MediaType.APPLICATION_JSON))
+        this.mockMvc
+                .perform(post(this.baseUrl + "/users/reset").contentType(MediaType.APPLICATION_JSON).content(json)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
 
