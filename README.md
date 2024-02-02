@@ -15,30 +15,30 @@ The video series is high quality and watching it pushed me to examine the approa
 
 ## Thoughts
 
-- The tutorial uses a Structure by Feature approach.  I use a Structure by Layer approach.  In reading about [the two approaches](https://www.geeksforgeeks.org/spring-boot-code-structure/), I think it is important I try to adopt Stucture by Feature as it greatly helps productivity with easier code reuse.  I intend to reference / rework the basic authentication in this repo in future projects.
-- Adding final to injected services and repositories is a quick and easy fix to improve code quality.  
-- Using records with DTO conversion is a better solution to what I've done previously.  Records are read-only and this helps the security and the reliability of an application.  
-- Adding @Transactional to services helps rollback failed database operations.  
-- The DBDataInitializer was surprisingly simple to add so I added a similar one to my [LCOGT-spring-backend](https://github.com/jdegand/LCOGT-spring-backend).  
-- I had to make some modifications to the SecurityConfiguration to replace deprecated methods.  
-- Adding Serializable to entities can be [problematic](https://stackoverflow.com/questions/2020904/when-and-why-jpa-entities-should-implement-the-serializable-interface).
-- Removed standard Result class for Response Entity or standard entity object
-- Result class - 3/4 of the class is redundant - although having a standard response to every endpoint can be beneficial (especially for testing).
-- Did not add any validation to User entity fields - this prevents handleValidationException from being invoked.  You can also not test failure paths for updateUser or addUser.
-- Added a changePassword route - used "reset" for the path name - whatever it is named, you need to update security configuration to allow the route.  
-- Thought about adding the reset route to its own controller but I decided to leave it in the user controller.  
-- `ChangePasswordRequest` could go in the DTO package.  
-- Just returned a string saying "Password changed successfully" for success of changePassword method.  If you want to return user back, you need to convert the user object to a user DTO so you don't send the password back to the client. 
-- I used a UserPrincipal object to help change the password so I could reuse `loadUserByUsername`. I used username as my unique identifier in the ChangePasswordRequest class.    
-- I had to mock 3 methods to get the updatePasswordSuccess test to pass.  
-- You get can the failure test for updatePassword to pass without having a correct test.  If you don't mock certain methods, it will fail regardless.  
-- Didn't test the CORS configuration by making a request from a frontend.
+- The tutorial uses a structure-by-feature approach. I use a structure-by-layer approach. In reading about [the two approaches](https://www.geeksforgeeks.org/spring-boot-code-structure/), I think it is important that I try to adopt structure-by-feature, as it greatly helps productivity with easier code reuse. I intend to reference or rework the basic authentication in this repository for future projects.
+- Adding `final` to injected services and repositories is a quick and easy fix to improve code quality.
+- Using records with DTO conversion is a better solution than what I've done previously. Records are read-only, and this helps the security and reliability of an application.
+- Adding `@Transactional` to services helps rollback failed database operations.
+- The `DBDataInitializer` was surprisingly simple to add, so I added a similar one to my [LCOGT-spring-backend](https://github.com/jdegand/LCOGT-spring-backend).
+- I had to make some modifications to the security configuration to replace deprecated methods.
+- Adding `serializable` to entities can be [problematic](https://stackoverflow.com/questions/2020904/when-and-why-jpa-entities-should-implement-the-serializable-interface).
+- I removed the Result class and used a Response Entity or a standard entity object.
+- 3/4 of the Result class is redundant. Having a standard response to every endpoint can be beneficial, especially for testing.
+- I did not add any validation to the User entity fields; this prevents the `handleValidationException` from being invoked. You can also not test failure paths for `updateUser` or `addUser`.
+- I added a `changePassword` route and used "reset" for the path name. I updated the security configuration to allow the route.
+- I thought about adding the reset route to its own controller, but I decided to leave it in the user controller.
+- `ChangePasswordRequest` could go in the DTO package.
+- I just returned a string saying "Password changed successfully" for the success response of the changePassword method. If you want to return a user back, you need to convert the user object to a user DTO so you don't send the password back to the client.
+- I used a UserPrincipal object to help change the password so I could reuse `loadUserByUsername`. I used username as my unique identifier in the ChangePasswordRequest class.
+- I had to mock 3 methods to get the updatePasswordSuccess test to pass.
+- You can get the failure test for updatePassword to pass without having a correct test. If you don't mock certain methods, the test will fail.
+- I didn't test the CORS configuration by making a request from a frontend.
 
 ## Improvements
 
 - Validation
 - Failure path tests
-- Delete user returns void - could use a Response Entity and return "User {id} deleted successfully" 
+- Delete user returns void - you could use a Response Entity and return "User {id} deleted successfully". 
 - Lombok - parallel move?
 - Refresh JWT Tokens 
 
